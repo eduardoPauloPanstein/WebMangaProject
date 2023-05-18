@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.MangaModels.MangaShortDbViewModel>
+
+@{
+    ViewData["Title"] = "Manga";
+}
+
+<h1>Manga</h1>
+
+<p>
+    <a class="custom-link" asp-action="Create">Create</a>
+    <a class="custom-link" asp-action="ConsumirApi">  Reset + Consume</a>
+</p>
+<table class="table custom-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CanonicalTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FavoritesCount)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CanonicalTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FavoritesCount)
+                </td>
+                <td>
+                @Html.ActionLink("Edit","Edit","Manga",new { id = @item.Id },new {@class = "custom-link"})
+
+                   @* <form asp-action="Edit", method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <input type="submit" value="Edit" class="btn btn-link custom-link" /> 
+                    </form>*@
+                </td>
+                <td>
+                @Html.ActionLink("Delete","Delete","Manga",new { id = @item.Id },new {@class = "custom-link"})
+
+                   @* <form asp-action="Delete" , method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <input type="submit" value="Delete" class="btn btn-link custom-link" />
+                    </form>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

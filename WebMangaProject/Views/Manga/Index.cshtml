@@ -1,0 +1,93 @@
+﻿@model MvcPresentationLayer.Models.MangaModels.MangasForHomeViewModel
+
+
+@{
+    ViewData["Title"] = "Mangas Home Page";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/homeStyles.css" asp-append-version="true" />
+
+</head>
+<body>
+    <section class="catalog" id="catalog">
+        <div class="idiv-config">
+            <h3 class="section-title">All Time Favorites</h3>
+            <div class="va-div">
+                <a class="custom-link va-config" asp-area="" asp-action="AllByFavorites" asp-controller="Manga">View All</a>
+            </div>
+        </div>
+        <hr />
+        <div class="card-wrapper cw-config">
+            @{
+                foreach (var item in Model.MangasFavorites)
+                {
+                    <div class="card-item">
+                        <a class="custom-link" href="/Manga/MangaOnPage/@item.Id">
+                            <img src=@item.PosterImageLink />
+                            <div class="card-content">
+                                <h5>@item.CanonicalTitle</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+    <section class="catalog" id="catalog">
+        <div class="idiv-config">
+            <h3 class="page-title pt-config">Most Popular</h3>
+            <div class="va-div">
+                <a class="custom-link va-config" asp-area="" asp-action="AllByUserCount" asp-controller="Manga">View All</a>
+            </div>
+        </div>
+        <hr />
+        <div class="card-wrapper cw-config">
+            @{
+                foreach (var item in Model.MangasByCount)
+                {
+                    <div class="card-item">
+                        <a class="custom-link" href="/Manga/MangaOnPage/@item.Id">
+                            <img src=@item.PosterImageLink />
+                            <div class="card-content">
+                                <h5>@item.CanonicalTitle</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+    <section class="catalog" id="catalog">
+        <div class="idiv-config">
+            <h3 class="page-title pt-config">Rating</h3>
+            <div class="va-div">
+                <a class="custom-link va-config" asp-area="" asp-action="AllByRating" asp-controller="Manga">View All</a>
+            </div>
+        </div>
+        <hr />
+        <div class="card-wrapper cw-config">
+            @{
+                foreach (var item in Model.MangasByRating)
+                {
+                    <div class="card-item">
+                        <a class="custom-link" href="/Manga/MangaOnPage/@item.Id">
+                            <img src=@item.PosterImageLink />
+                            <div class="card-content">
+                                <h5>@item.CanonicalTitle</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+
+</body>
+</html>

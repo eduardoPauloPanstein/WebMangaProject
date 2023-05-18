@@ -1,0 +1,179 @@
+﻿@model MvcPresentationLayer.Models.UserModel.UserLoginPageViewModel;
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="login-body login-space">
+
+<div class="login-container">
+    <div class="login-forms">
+        <div class="login-form login">
+            <span class="login-title">Login</span>
+
+            <form asp-action="Login">
+                <div class="login-input-field">
+                    <input asp-for="UserLogin.EmailOrNickname" type="text" placeholder="Enter your email" required>
+                    <span asp-validation-for="UserLogin.EmailOrNickname" class="text-danger"></span>
+                    <i class="uil uil-envelope icon"></i>
+                </div>
+                <div class="login-input-field">
+                    <input asp-for="UserLogin.Password" type="password" class="password" placeholder="Enter your password" required>
+                    <span asp-validation-for="UserLogin.Password" class="text-danger"></span>
+                    <i class="uil uil-lock icon"></i>
+                    <i class="uil uil-eye-slash showHidePw"></i>
+                </div>
+
+                <div class="login-input-field login-button">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+
+            <div class="login-signup">
+                <span class="login-text">
+                    Not a member?
+                    <a href="#" class="login-text signup-link">Signup Now</a>
+                </span>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="login-form signup">
+            <span class="login-title">Registration</span>
+
+            <form asp-action="Create">
+                <div class="login-input-field">
+                    <input type="text" asp-for="UserInsert.Nickname" placeholder="Enter your nickname" required>
+                    <span asp-validation-for="UserInsert.Nickname" class="text-danger"></span>
+                    <i class="uil uil-user"></i>
+                </div>
+
+                <div class="login-input-field">
+                    <input type="text" asp-for="UserInsert.Email" placeholder="Enter your email" required>
+                    <span asp-validation-for="UserInsert.Email" class="text-danger"></span>
+                    <i class="uil uil-envelope icon"></i>
+                </div>
+
+                <div class="login-input-field">
+                    <input type="password"  asp-for="UserInsert.Password" class="password" placeholder="Create a password" required>
+                    <span asp-validation-for="UserInsert.Password" class="text-danger"></span>
+                    <i class="uil uil-lock icon"></i>
+                    <i class="uil uil-eye-slash showHidePw"></i>
+                </div>
+
+                <div class="login-input-field">
+                    <input type="password" asp-for="UserInsert.ConfirmPassword" class="password" placeholder="Confirm a password" required>
+                    <span asp-validation-for="UserInsert.ConfirmPassword" class="text-danger"></span>
+                    <i class="uil uil-lock icon"></i>
+                </div>
+                @if (ViewBag.Errors != null)
+                {
+                       <div class="form-group">
+                        <p class="bg-warning">
+                            @ViewBag.Errors
+                        </p>
+                        </div>
+                }
+                <div class="login-input-field login-button">
+                    <input type="submit" value="Create">
+                </div>
+            </form>
+
+            <div class="login-signup">
+                <span class="login-text">
+                    Already a member?
+                    <a href="#" class="login-text login-link">Login Now</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@*
+<div class="row">
+    <div class="col d-flex justify-content-md-center">
+
+        <form asp-action="Login">
+            <!-- Email input -->
+            <div class="form-group">
+                <label asp-for="EmailOrNickname" class="control-label"></label>
+                <input asp-for="EmailOrNickname" class="form-control" />
+                <span asp-validation-for="EmailOrNickname" class="text-danger"></span>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input type="password" asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                        <label class="form-check-label" for="form2Example31"> Remember me </label>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <!-- Simple link -->
+                    <a href="#!">Forgot password?</a>
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="form-group">
+                <input type="submit" value="Login" class="btn btn-primary" />
+            </div>
+
+
+            <!-- Register -->
+            <div class="text-center">
+                <p>Not a member? <a href="#!">Register</a></p>
+                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Create">Not a member!</a>
+
+            </div>
+        </form>
+    </div>
+</div>*@
+
+<script>
+    const container = document.querySelector(".login-container"),
+        pwShowHide = document.querySelectorAll(".showHidePw"),
+        pwFields = document.querySelectorAll(".password"),
+        signUp = document.querySelector(".signup-link"),
+        login = document.querySelector(".login-link");
+
+    //   js code to show/hide password and change icon
+    pwShowHide.forEach(eyeIcon => {
+        eyeIcon.addEventListener("click", () => {
+            pwFields.forEach(pwField => {
+                if (pwField.type === "password") {
+                    pwField.type = "text";
+
+                    pwShowHide.forEach(icon => {
+                        icon.classList.replace("uil-eye-slash", "uil-eye");
+                    })
+                } else {
+                    pwField.type = "password";
+
+                    pwShowHide.forEach(icon => {
+                        icon.classList.replace("uil-eye", "uil-eye-slash");
+                    })
+                }
+            })
+        })
+    })
+
+    // js code to appear signup and login form
+    signUp.addEventListener("click", () => {
+        container.classList.add("active");
+    });
+    login.addEventListener("click", () => {
+        container.classList.remove("active");
+    });
+
+</script>

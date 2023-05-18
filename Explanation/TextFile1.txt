@@ -1,0 +1,9 @@
+﻿
+
+
+
+
+
+A nossa intenção é uma aplicação web, tanto para por em prática o que já aprendemos quanto para dar continuidade no aprendizado,
+onde botar ideias em prática e enfrentar os desafios até entender, fazer funcionar, é extremamente importante.
+

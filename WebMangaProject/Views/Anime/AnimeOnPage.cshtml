@@ -1,0 +1,309 @@
+﻿@model MvcPresentationLayer.Models.AnimeModel.AnimeItemModalViewModel
+@using Entities.Enums
+
+@{
+
+    ViewData["Title"] = @Model.Anime.CanonicalTitle;
+    string Img = @Model.Anime.AnimeCoverImage;
+    string width = "100%";
+    int height = 400;
+    if (Model.Anime.AnimeCoverImage == null)
+    {
+        //width = "25";
+        //height = 400;
+        Img = Model.Anime.AnimePosterImage;
+    }
+    string Synopsys = @Model.Anime.Synopsis;
+
+}
+
+
+
+<div class="mop-banner" style="background-image: url('@Model.Anime.AnimeCoverImage')">
+</div>
+
+<div class="mop-header">
+    <div class="mop-container">
+        <div class="cover-wrap overlap-banner">
+            <div class="cover-wrap-inner">
+                <img class="mop-poster" src="@Model.Anime.AnimePosterImage" />
+                @{
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="mop-actions">
+                            <div class="mop-list">
+                                <!-- Trigger/Open The Modal -->
+                                <div class="addList" id="addList">Add to List</div>
+                                <div class="dropdown el-dropdown">
+                                    <span class="el-dropdown-link el-dropdown-selfdefine">
+                                        <i class="uil uil-angle-down"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mop-favorite">
+                                <i class="uil uil-heart-alt"></i>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="mop-desc-content">
+            <h1>@Model.Anime.CanonicalTitle</h1>
+
+            @if (Synopsys.Length > 700)
+            {
+                <p class="mop-description">
+                    @Synopsys.Substring(0, 700)...
+                </p>
+                <p class="mop-full-description">
+                    @Synopsys;
+                </p>
+            }
+            else
+            {
+                <p class="mop-description">
+                    @Synopsys.ToString();
+                </p>
+            }
+            @if (@Synopsys.Length > 700)
+            {
+                <span class="mop-read-more">Read More</span>
+                <span class="mop-read-less">Read Less</span>
+
+            }
+        </div>
+    </div>
+</div>
+
+<div class="mop-div-info">
+    <div class="div-anime-info">
+        <div class="anime-info-items">
+            <div class="info-type">Format:</div>
+            <div class="info-result">@Model.Anime.Subtype</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Episodes:</div>
+            <div class="info-result">@Model.Anime.EpisodeCount</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Episode Duration:</div>
+            <div class="info-result">@Model.Anime.EpisodeLength</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Status:</div>
+            <div class="info-result">@Model.Anime.Status.ToString()</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Start Date:</div>
+            <div class="info-result">@Model.Anime.StartDate</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">End Date:</div>
+            <div class="info-result">@Model.Anime.EndDate</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Average Score:</div>
+            <div class="info-result">@Model.Anime.AverageRating</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Popularity:</div>
+            <div class="info-result">@Model.Anime.PopularityRank</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Favorites:</div>
+            <div class="info-result">@Model.Anime.FavoritesCount</div>
+        </div>
+        <div class="anime-info-items">
+            <div class="info-type">Genres:</div>
+            <div class="info-result">
+                <ul>
+                    @{
+                        foreach (var item in @Model.Anime.Categories)
+                        {
+                            <li>
+                                <p>@item.Name</p>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="mop-div-comment">
+        <div class="mop-comment">
+            <form method="post" action="/AnimeComentary/Insert">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <!-- <input type="text" placeholder="Leave a comment here..."> -->
+                <div class="form-group">
+                    <input asp-for="@Model.AnimeComentary.Comentary" class="form-control" placeholder="Leave a comment here..." />
+                    <span asp-validation-for="@Model.AnimeComentary.Comentary" class="text-danger"></span>
+                    <input type="hidden" asp-for="@Model.Anime.Id" />
+                </div>
+                <div class="form-group mop-btn">
+                    <input type="submit" value="Confirm" class="custom-btn" />
+                </div>
+            </form>
+            <hr />
+             <div>
+                @{
+                    foreach (var item in Model.Comments)
+                    {
+                        <div>
+                            <img src="~/avatars/@item.User.AvatarImageFileLocation" width="90" height="90"/>
+                            <span> <b>@item.User.Nickname:</b> @item.Comentary </span>
+                        </div>
+                        <br />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="mop-div-suggestions">
+        <p class="mop-sug-title">Suggestions:</p>
+        <div class="card-wrapper cw-config">
+            @{
+                foreach (var item in Model.Recommendations)
+                {
+                    <div class="card-item">
+                        <a class="custom-link" href="/Anime/AnimeOnPage/@item.Id">
+                            <img src=@item.AnimePosterImage />
+                            <div class="card-content">
+                                <h5>@item.canonicalTitle</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+<!-- The Modal -->
+<div id="modalAdd" class="modalAdd">
+    <!-- Modal content -->
+    <div class="modalAdd-Content">
+        <span class="close">&times;</span>
+        <form method="post" action="/UserItemAnime/Insert/">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Anime.Id" />
+            <div class="form-group">
+
+                <label asp-for="@Model.UserAnimeItem.Status" class="control-label"></label>
+                @{
+                    string[] valores = Enum.GetNames<UserAnimeStatus>();
+                }
+                <select class="form-control" asp-for="@Model.UserAnimeItem.Status">
+                    @for (int i = 0; i < valores.Length; i++)
+                    {
+                        <option value="@i">@valores[i].Replace("_"," ")</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.UserAnimeItem.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.StartDate" class="control-label"></label>
+                <input asp-for="@Model.UserAnimeItem.StartDate" class="form-control" />
+                <span asp-validation-for="@Model.UserAnimeItem.StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.FinishDate" class="control-label"></label>
+                <input asp-for="@Model.UserAnimeItem.FinishDate" class="form-control" />
+                <span asp-validation-for="@Model.UserAnimeItem.FinishDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.Score" class="control-label"></label>
+                @{
+                    string[] valoresScore = Enum.GetNames<MangaScore>();
+                }
+                <select class="form-control" asp-for="@Model.UserAnimeItem.Score">
+                    @for (int i = 0; i < valoresScore.Length; i++)
+                    {
+                        int j = i + 1;
+                        <option value="@j">@valoresScore[i].Replace("_"," ")</option>
+                    }
+                </select>
+                <span asp-validation-for="@Model.UserAnimeItem.Score" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.TotalRewatches" class="control-label"></label>
+                <input asp-for="@Model.UserAnimeItem.TotalRewatches" class="form-control" />
+                <span asp-validation-for="@Model.UserAnimeItem.TotalRewatches" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.Episode" class="control-label"></label>
+                <input asp-for="@Model.UserAnimeItem.Episode" class="form-control" />
+                <span asp-validation-for="@Model.UserAnimeItem.Episode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.PrivateNotes" class="control-label"></label>
+                <input asp-for="@Model.UserAnimeItem.PrivateNotes" class="form-control" />
+                <span asp-validation-for="@Model.UserAnimeItem.PrivateNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.UserAnimeItem.PublicNotes" class="control-label"></label>
+                <input asp-for="@Model.UserAnimeItem.PublicNotes" class="form-control" />
+                <span asp-validation-for="@Model.UserAnimeItem.PublicNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.UserAnimeItem.Private" /> @Html.DisplayNameFor(model => model.UserAnimeItem.Private)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="@Model.UserAnimeItem.Favorite" /> @Html.DisplayNameFor(model => model.UserAnimeItem.Favorite)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Favorite" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+
+    var modal = document.getElementById("modalAdd");
+    var btn = document.getElementById("addList");
+    var span = document.getElementsByClassName("close")[0];
+
+    btn.onclick = function () {
+        modal.style.display = "flex";
+    }
+
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    let description = document.querySelector('.mop-description')
+    let full = document.querySelector('.mop-full-description')
+    let more = document.querySelector('.mop-read-more')
+    let less = document.querySelector('.mop-read-less')
+
+    more.onclick = function () {
+        description.classList.toggle('active')
+        full.classList.toggle('active')
+        less.classList.toggle('active')
+        more.classList.toggle('active')
+    }
+
+    less.onclick = function () {
+        description.classList.toggle('active')
+        full.classList.toggle('active')
+        more.classList.toggle('active')
+        less.classList.toggle('active')
+    }
+</script>
+
+
+

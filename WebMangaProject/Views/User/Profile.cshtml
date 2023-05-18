@@ -1,0 +1,784 @@
+﻿@model MvcPresentationLayer.Models.UserModel.UserProfileItemViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+@*<h1>@ViewData["Title"]</h1>*@
+
+<div class="profile-images">
+    <img src="~/covers/@{
+                                                                                @Model.User.CoverImageFileLocation
+}" class="cover-photo" />
+    <img src="~/avatars/@{
+                                                                                    @Model.User.AvatarImageFileLocation
+}" class="profile-icon" />
+</div>
+
+@*<div class="follow-btn-config">
+    <button class="follow-btn">Follow</button>
+    </div>*@
+<div class="profile-container">
+
+    <div class="profile-info">
+        <div class="profile-name">@Model.User.Nickname</div>
+
+        <div class="profile-about">
+            <h5>About me:</h5>
+            <hr />
+            <p class="about">@Model.User.About</p>
+        </div>
+    </div>
+
+    @*<button class="msg-btn">Message</button>*@
+
+    <div class="profile-favorites">
+        <div class="btn-config">
+            <button class="alternate-btn profile-manga-btn">Manga</button>
+            <button class="alternate-btn profile-anime-btn">Anime</button>
+        </div>
+        <div class="show">
+
+            <div class="profile-manga-show active">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Favorite)
+                        {
+
+                            <a href="/Manga/MangaOnPage/@item.Id">
+                                <li>
+                                    <img src="@item.Manga.PosterImageLink">
+                                    <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                </li>
+                            </a>
+
+                        }
+                    }
+                }
+            </div>
+            <div class="profile-anime-show">
+                @{
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Favorite)
+                        {
+                            <a href="/Anime/MangaOnPage/@item.Id">
+                                <li>
+                                    <img src="@item.Anime.AnimePosterImage">
+                                    <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                </li>
+                            </a>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-geral-list">
+        <div class="btn-config">
+            <button class="alternate-btn profile-list-all-btn">All</button>
+            <button class="alternate-btn profile-list-reading-btn">Reading</button>
+            <button class="alternate-btn profile-list-plantoread-btn">Plan to Read // Watch</button>
+            <button class="alternate-btn profile-list-completed-btn">Completed</button>
+            <button class="alternate-btn profile-list-rereading-btn">Rereading // Rewatching</button>
+            <button class="alternate-btn profile-list-paused-btn">Paused</button>
+            <button class="alternate-btn profile-list-dropped-btn">Dropped</button>
+        </div>
+        <div class="display-list">
+            <div class="profile-list-all-show active">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        <div>
+                            <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                <li>
+                                    <img src="@item.Manga.PosterImageLink">
+                                    <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                    @{
+
+                                        int score = Convert.ToInt32(@item.Score);
+                                        if (score > 0)
+                                        {
+                                            <span> | </span>
+                                            for (int i = 0; i < score; i++)
+                                            {
+                                                <span>&#11088;</span>
+                                            }
+                                        }
+                                        if (@item.Favorite)
+                                        {
+                                            <span> | </span>
+                                            <span>&#10084;</span>
+                                        }
+                                    }
+
+                                </li>
+                            </a>
+                        </div>
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        <div>
+                            <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                <li>
+                                    <img src="@item.Anime.AnimePosterImage">
+                                    <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                    @{
+
+                                        int score = Convert.ToInt32(@item.Score);
+                                        if (score > 0)
+                                        {
+                                            <span> | </span>
+                                            for (int i = 0; i < score; i++)
+                                            {
+                                                <span>&#11088;</span>
+                                            }
+                                        }
+                                        if (@item.Favorite)
+                                        {
+                                            <span> | </span>
+                                            <span>&#10084;</span>
+                                        }
+                                    }
+                                </li>
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="profile-list-reading-show">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Status.ToString() == "Reading")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                    <li>
+                                        <img src="@item.Manga.PosterImageLink">
+                                        <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Status.ToString() == "Watching")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                    <li>
+                                        <img src="@item.Anime.AnimePosterImage">
+                                        <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="profile-list-plantoread-show">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Status.ToString() == "PlanToRead")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                    <li>
+                                        <img src="@item.Manga.PosterImageLink">
+                                        <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Status.ToString() == "PlanToWatch")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                    <li>
+                                        <img src="@item.Anime.AnimePosterImage">
+                                        <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="profile-list-completed-show">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Status.ToString() == "Completed")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                    <li>
+                                        <img src="@item.Manga.PosterImageLink">
+                                        <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Status.ToString() == "Completed")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                    <li>
+                                        <img src="@item.Anime.AnimePosterImage">
+                                        <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="profile-list-rereading-show">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Status.ToString() == "Rereading")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                    <li>
+                                        <img src="@item.Manga.PosterImageLink">
+                                        <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Status.ToString() == "ReWatching")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                    <li>
+                                        <img src="@item.Anime.AnimePosterImage">
+                                        <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="profile-list-paused-show">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Status.ToString() == "Paused")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                    <li>
+                                        <img src="@item.Manga.PosterImageLink">
+                                        <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Status.ToString() == "Paused")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                    <li>
+                                        <img src="@item.Anime.AnimePosterImage">
+                                        <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <div class="profile-list-dropped-show">
+                @{
+                    foreach (var item in Model.User.MangaList)
+                    {
+                        if (item.Status.ToString() == "Dropped")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Manga/MangaOnPage/@item.Manga.Id">
+                                    <li>
+                                        <img src="@item.Manga.PosterImageLink">
+                                        <span class="Profile-manga-name">@item.Manga.CanonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                    foreach (var item in Model.User.AnimeList)
+                    {
+                        if (item.Status.ToString() == "Dropped")
+                        {
+                            <div>
+                                <a class="dp-list-card" href="/Anime/AnimeOnPage/@item.Anime.Id">
+                                    <li>
+                                        <img src="@item.Anime.AnimePosterImage">
+                                        <span class="Profile-manga-name">@item.Anime.canonicalTitle</span>
+                                        @{
+
+                                            int score = Convert.ToInt32(@item.Score);
+                                            if (score > 0)
+                                            {
+                                                <span> | </span>
+                                                for (int i = 0; i < score; i++)
+                                                {
+                                                    <span>&#11088;</span>
+                                                }
+                                            }
+                                            if (@item.Favorite)
+                                            {
+                                                <span> | </span>
+                                                <span>&#10084;</span>
+                                            }
+                                        }
+                                    </li>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    let profileMangaShow = document.querySelector('.profile-manga-show');
+    let profileAnimeShow = document.querySelector('.profile-anime-show');
+
+    let profileAllShow = document.querySelector('.profile-list-all-show');
+    let profileReadingShow = document.querySelector('.profile-list-reading-show');
+    let profilePlanShow = document.querySelector('.profile-list-plantoread-show');
+    let profileCompletedShow = document.querySelector('.profile-list-completed-show');
+    let profileRereadingShow = document.querySelector('.profile-list-rereading-show');
+    let profilePausedShow = document.querySelector('.profile-list-paused-show');
+    let profileDroppedShow = document.querySelector('.profile-list-dropped-show');
+
+
+    let profileMangaBtn = document.querySelector('.profile-manga-btn');
+    let profileAnimeBtn = document.querySelector('.profile-anime-btn');
+
+    let profileAllBtn = document.querySelector('.profile-list-all-btn');
+    let profileReadingBtn = document.querySelector('.profile-list-reading-btn');
+    let profilePlanBtn = document.querySelector('.profile-list-plantoread-btn');
+    let profileCompletedBtn = document.querySelector('.profile-list-completed-btn');
+    let profileRereadingBtn = document.querySelector('.profile-list-rereading-btn');
+    let profilePausedBtn = document.querySelector('.profile-list-paused-btn');
+    let profileDroppedBtn = document.querySelector('.profile-list-dropped-btn');
+
+    profileMangaBtn.onclick = function () {
+        if (profileAnimeShow.classList.contains('active')) {
+            profileAnimeShow.classList.toggle('active')
+            profileMangaShow.classList.toggle('active')
+        }
+    }
+
+    profileAnimeBtn.onclick = function () {
+        if (profileMangaShow.classList.contains('active')) {
+            profileMangaShow.classList.toggle('active')
+            profileAnimeShow.classList.toggle('active')
+        }
+    }
+
+
+    profileAllBtn.onclick = function () {
+        if (profileReadingShow.classList.contains('active')) {
+            profileAllShow.classList.toggle('active')
+            profileReadingShow.classList.toggle('active')
+        }
+        else if (profilePlanShow.classList.contains('active')) {
+            profileAllShow.classList.toggle('active')
+            profilePlanShow.classList.toggle('active')
+        }
+        else if (profileCompletedShow.classList.contains('active')) {
+            profileAllShow.classList.toggle('active')
+            profileCompletedShow.classList.toggle('active')
+        }
+        else if (profileRereadingShow.classList.contains('active')) {
+            profileAllShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profilePausedShow.classList.contains('active')) {
+            profileAllShow.classList.toggle('active')
+            profilePausedShow.classList.toggle('active')
+        }
+        else if (profileDroppedShow.classList.contains('active')) {
+            profileAllShow.classList.toggle('active')
+            profileDroppedShow.classList.toggle('active')
+        }
+    }
+
+    profileReadingBtn.onclick = function () {
+        if (profileAllShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profileAllShow.classList.toggle('active')
+        }
+        else if (profilePlanShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profilePlanShow.classList.toggle('active')
+        }
+        else if (profileCompletedShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profileCompletedShow.classList.toggle('active')
+        }
+        else if (profileRereadingShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profilePausedShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profilePausedShow.classList.toggle('active')
+        }
+        else if (profileDroppedShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profileDroppedShow.classList.toggle('active')
+        }
+    }
+
+    profilePlanBtn.onclick = function () {
+        if (profileAllShow.classList.contains('active')) {
+            profilePlanShow.classList.toggle('active')
+            profileAllShow.classList.toggle('active')
+        }
+        else if (profileReadingShow.classList.contains('active')) {
+            profilePlanShow.classList.toggle('active')
+            profileReadingShow.classList.toggle('active')
+        }
+        else if (profileCompletedShow.classList.contains('active')) {
+            profilePlanShow.classList.toggle('active')
+            profileCompletedShow.classList.toggle('active')
+        }
+        else if (profileRereadingShow.classList.contains('active')) {
+            profilePlanShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profilePausedShow.classList.contains('active')) {
+            profilePlanShow.classList.toggle('active')
+            profilePausedShow.classList.toggle('active')
+        }
+        else if (profileDroppedShow.classList.contains('active')) {
+            profilePlanShow.classList.toggle('active')
+            profileDroppedShow.classList.toggle('active')
+        }
+    }
+
+    profileCompletedBtn.onclick = function () {
+        if (profileAllShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profileAllShow.classList.toggle('active')
+        }
+        else if (profileReadingShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profileReadingShow.classList.toggle('active')
+        }
+        else if (profilePlanShow.classList.contains('active')) {
+            profileCompletedShow.classList.toggle('active')
+            profilePlanShow.classList.toggle('active')
+        }
+        else if (profileRereadingShow.classList.contains('active')) {
+            profileCompletedShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profilePausedShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profilePausedShow.classList.toggle('active')
+        }
+        else if (profileDroppedShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profileDroppedShow.classList.toggle('active')
+        }
+    }
+
+    profileRereadingBtn.onclick = function () {
+        if (profileAllShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profileAllShow.classList.toggle('active')
+        }
+        else if (profilePlanShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profilePlanShow.classList.toggle('active')
+        }
+        else if (profileCompletedShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profileCompletedShow.classList.toggle('active')
+        }
+        else if (profileReadingShow.classList.contains('active')) {
+            profileReadingShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profilePausedShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profilePausedShow.classList.toggle('active')
+        }
+        else if (profileDroppedShow.classList.contains('active')) {
+            profileRereadingShow.classList.toggle('active')
+            profileDroppedShow.classList.toggle('active')
+        }
+    }
+
+    profilePausedBtn.onclick = function () {
+        if (profileAllShow.classList.contains('active')) {
+            profilePausedShow.classList.toggle('active')
+            profileAllShow.classList.toggle('active')
+        }
+        else if (profilePlanShow.classList.contains('active')) {
+            profilePausedShow.classList.toggle('active')
+            profilePlanShow.classList.toggle('active')
+        }
+        else if (profileCompletedShow.classList.contains('active')) {
+            profilePausedShow.classList.toggle('active')
+            profileCompletedShow.classList.toggle('active')
+        }
+        else if (profileRereadingShow.classList.contains('active')) {
+            profilePausedShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profileReadingShow.classList.contains('active')) {
+            profilePausedShow.classList.toggle('active')
+            profileReadingShow.classList.toggle('active')
+        }
+        else if (profileDroppedShow.classList.contains('active')) {
+            profilePausedShow.classList.toggle('active')
+            profileDroppedShow.classList.toggle('active')
+        }
+    }
+
+    profileDroppedBtn.onclick = function () {
+        if (profileAllShow.classList.contains('active')) {
+            profileDroppedShow.classList.toggle('active')
+            profileAllShow.classList.toggle('active')
+        }
+        else if (profilePlanShow.classList.contains('active')) {
+            profileDroppedShow.classList.toggle('active')
+            profilePlanShow.classList.toggle('active')
+        }
+        else if (profileCompletedShow.classList.contains('active')) {
+            profileDroppedShow.classList.toggle('active')
+            profileCompletedShow.classList.toggle('active')
+        }
+        else if (profileRereadingShow.classList.contains('active')) {
+            profileDroppedShow.classList.toggle('active')
+            profileRereadingShow.classList.toggle('active')
+        }
+        else if (profilePausedShow.classList.contains('active')) {
+            profileDroppedShow.classList.toggle('active')
+            profilePausedShow.classList.toggle('active')
+        }
+        else if (profileReadingShow.classList.contains('active')) {
+            profileDroppedShow.classList.toggle('active')
+            profileReadingShow.classList.toggle('active')
+        }
+    }
+
+
+</script>

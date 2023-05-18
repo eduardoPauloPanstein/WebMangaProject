@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MvcPresentationLayer.Models.AnimeModel.AnimeShortViewModel>
+
+
+@{
+    ViewData["Title"] = "all time favorites animes";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/homeStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+
+    <section class="catalog" id="catalog">
+        <div class="card-wrapper">
+            @{
+                foreach (var item in Model)
+                {
+                    <div class="card-item">
+                        <a class="custom-link" href="/Anime/AnimeOnPage/@item.Id">
+                            <img src=@item.AnimePosterImage alt="@item.canonicalTitle" />
+                            <div class="card-content">
+                                <h5>@item.canonicalTitle</h5>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </section>
+
+</body>
+</html>

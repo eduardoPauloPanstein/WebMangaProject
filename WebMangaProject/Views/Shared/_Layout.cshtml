@@ -1,0 +1,234 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AniMa List</title>
+    <link rel="shortcut icon" href="~/icon.ico">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebMangaProject.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+</head>
+
+@{
+    //BigBoss,
+    //    Admin,
+    //    User
+
+    string role = "";
+    int idCliente = 0;
+    if (this.User.Identity.IsAuthenticated)
+    {
+        List<Claim> claims = this.User.Claims.ToList();
+        idCliente = int.Parse(claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.PrimarySid).Value);
+        role = claims.FirstOrDefault(c => c.Type == System.Security.Claims.ClaimTypes.Role).Value;
+    }
+    else
+    {
+        role = "NãoLogado";
+    }
+
+}
+
+<body>
+    <div class="sidebar">
+        <div class="toggle"></div>
+        <ul>
+            <li>
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="uil uil-estate"></i>
+                    <span class="title">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="manga-btn">
+                    <i class="uil uil-book-open"></i>
+                    <span class="title">Manga</span>
+                    <i class="uil uil-caret-right sub-menu-manga"></i>
+                </a>
+                <ul class="manga-show">
+                    @if (role == "BigBoss" || role == "Admin")
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="MangaDb" asp-action="Index">
+                                <span class="sub-title">Database</span>
+                            </a>
+                        </li>
+                    }
+                    <li>
+                        <a asp-area="" asp-controller="Manga" asp-action="Index">
+                            <span class="sub-title">Manga Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Manga" asp-action="AllByFavorites">
+                            <span class="sub-title">Favorites</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Manga" asp-action="AllByCount">
+                            <span class="sub-title">Popular</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Manga" asp-action="AllByRating">
+                            <span class="sub-title">Rating</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#" class="anime-btn">
+                    <i class="uil uil-play-circle"></i>
+                    <span class="title">Anime</span>
+                    <i class="uil uil-caret-right sub-menu-anime"></i>
+                </a>
+                <ul class="anime-show">
+                    <li>
+                        <a asp-area="" asp-controller="Anime" asp-action="Index">
+                            <span class="sub-title">Anime Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Anime" asp-action="AllByFavorites">
+                            <span class="sub-title">Favorites</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Anime" asp-action="AllByCount">
+                            <span class="sub-title">Popular</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Anime" asp-action="AllByRating">
+                            <span class="sub-title">Rating</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a asp-area="" asp-controller="Home" asp-action="AboutUs">
+                    <i class="uil uil-users-alt"></i>
+                    <span class="title">About Us</span>
+                </a>
+            </li>
+            @if (role != "NãoLogado")
+            {
+                <li>
+                    <a href="/User/Edit/@idCliente">
+                        <i class="uil uil-cog"></i>
+                        <span class="title">Settings</span>
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </div>
+    <div class="home_content">
+        <header>
+            <nav class="custom-navbar">
+
+                <a class="Logo custom-link" style="margin-left: 10px;" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/avatars/Logo.png" class="custom-logo" />
+                    <span class="title-logo">Anima List</span>
+                </a>
+                <ul class="navbar-ul">
+                    @if (role == "BigBoss" || role == "Admin")
+                    {
+                        <li class="custom-link-nav">
+                            <a class="custom-link " asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                        </li>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item ">
+                            <a class="custom-link " asp-area="" asp-controller="User" asp-action="Profile">Hi @User.Identity.Name!</a>
+                        </li>
+
+                        <li class="nav-item ">
+                            <a class="custom-link " asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class=" custom-link-nav">
+                            <a class=" custom-link" asp-area="" asp-controller="User" asp-action="Login">Login</a>
+                        </li>
+                    }
+                    <div class="wrapper">
+                        <div class="search-input">
+                            <input type="text" placeholder="Search Manga...">
+                            <div class="autocom-box">
+                            </div>
+                            <div class="icon">
+                                <i class="uil uil-search search-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
+
+            </nav>
+        </header>
+        <div class="">
+            <main role="main" class="">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script>
+        let sidebar = document.querySelector('.sidebar');
+        let toggle = document.querySelector('.toggle');
+        toggle.onclick = function () {
+            sidebar.classList.toggle('active')
+            if (mangashow.classList.contains('active')) {
+                mangashow.classList.toggle('active')
+                submenumanga.classList.toggle('rotate')
+            }
+            if (animeshow.classList.contains('active')) {
+                animeshow.classList.toggle('active')
+                submenuanime.classList.toggle('rotate')
+            }
+        }
+
+        let mangashow = document.querySelector('.manga-show');
+        let animeshow = document.querySelector('.anime-show');
+
+        let mangabtn = document.querySelector('.manga-btn');
+        let animebtn = document.querySelector('.anime-btn');
+
+        let submenumanga = document.querySelector('.sub-menu-manga')
+        let submenuanime = document.querySelector('.sub-menu-anime')
+
+        mangabtn.onclick = function () {
+            if (sidebar.classList.contains('active')) {
+                mangashow.classList.toggle('active')
+                submenumanga.classList.toggle('rotate')
+            }
+            else {
+                sidebar.classList.toggle('active')
+                mangashow.classList.toggle('active')
+                submenumanga.classList.toggle('rotate')
+            }
+        }
+        animebtn.onclick = function () {
+            if (sidebar.classList.contains('active')) {
+                animeshow.classList.toggle('active')
+                submenuanime.classList.toggle('rotate')
+            } else {
+                sidebar.classList.toggle('active')
+                animeshow.classList.toggle('active')
+                submenuanime.classList.toggle('rotate')
+            }
+        }
+
+    </script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

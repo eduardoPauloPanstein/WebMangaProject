@@ -1,0 +1,41 @@
+﻿﻿section .catalog {
+    width: 100%;
+    padding: 100px;
+}
+
+.card-wrapper {
+    padding: 0px;
+    grid-gap: 28px 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    grid-template-columns: repeat(auto-fill,185px);
+}
+
+.card-item {
+    display: flex;
+    grid-template-rows: -webkit-min-content auto;
+    grid-template-rows: min-content auto;
+    position: relative;
+    width: 200px;
+    background: border-box;
+}
+
+.card-content {
+    color: rgb(var(--color-gray-700));
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 21px;
+    margin-top: 10px;
+    overflow: hidden;
+    transition: color .2s ease;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.card-item img {
+    width: 185px;
+    height: 250px;
+    border-radius: 15px;
+}

@@ -1,0 +1,188 @@
+﻿@model MvcPresentationLayer.Models.HomePage.HomePageViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/homeStyles.css" asp-append-version="true" />
+
+</head>
+<body>
+
+    <div class="homepage-div">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <div class="homepage-banner">
+                <div class="banner-title"><h1>AniMa List</h1></div>
+                <div class="banner-phrase"><p>Welcome and enjoy!</p></div>
+                <div class="banner-grid">
+                    <div class="banner-info col-3">
+                        <div class="infos">
+                            <div>
+                                <img src="~/covers/mancha.png" class="banner-image">
+                                <i class="uil uil-users-alt banner-icon"></i>
+                            </div>
+                            <div class="info-title">
+                                <h5>Everyone's opinion</h5>
+                                <div class="description">See what people are enjoying with the general list of favorite manga and anime</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="banner-info col-3">
+                        <div class="infos">
+                            <div>
+                                <img src="~/covers/mancha.png" class="banner-image rotate-90">
+                                <i class="uil uil-comment-alt-dots banner-icon"></i>
+                            </div>
+                            <div class="info-title">
+                                <h5>Give your Opinion</h5>
+                                <div class="description">You can comment about every manga and anime you want to!</div>
+                            </div>
+
+                        </div>
+                    </div><div class="banner-info col-3">
+                        <div class="infos">
+                            <div>
+                                <img src="~/covers/mancha.png" class="banner-image rotate-180">
+                                <i class="uil uil-star banner-icon"></i>
+                            </div>
+                            <div class="info-title">
+                                <h5>Customized Recommendation</h5>
+                                <div class="description">Our sistem recommends you new titles basead in your readings</div>
+                            </div>
+
+                        </div>
+                    </div><div class="banner-info col-3">
+                        <div class="infos">
+                            <div>
+                                <img src="~/covers/mancha.png" class="banner-image rotate-270">
+                                <i class="uil uil-image-v banner-icon"></i>
+                            </div>
+                             <div class="info-title">
+                                <h5>Choose your Icons</h5>
+                                <div class="description">Use any image you want as your profile and cover image</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="alh-div">
+        <div>
+            <div class="catalog alh-grid" id="catalog">
+                <div class="idiv-config">
+                    <h3 class=" section-title">All Time Favorite Manga</h3>
+                    <div class="va-div">
+                        <a class="custom-link va-config" asp-area="" asp-action="AllByFavorites" asp-controller="Manga">View All</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="alh-grid-config">
+                    <div class="card-wrapper">
+                        @{
+                            foreach (var item in Model.MangasFavorites)
+                            {
+                                <div class="card-item">
+                                    <a class="custom-link" href="/Manga/MangaOnPage/@item.Id">
+                                        <img src=@item.PosterImageLink />
+                                        <div class="card-content">
+
+                                            <h5>@item.CanonicalTitle</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="catalog alh-grid" id="catalog">
+                <div class="idiv-config">
+                    <h3 class="section-title">All Time Favorite Animes</h3>
+                    <div class="va-div">
+                        <a class="custom-link va-config" asp-area="" asp-action="AllByFavorites" asp-controller="Anime">View All</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-wrapper cw-config">
+                    @{
+                        foreach (var item in Model.AnimesFavorites)
+                        {
+                            <div class="card-item">
+                                <a class="custom-link" href="/Anime/AnimeOnPage/@item.Id">
+                                    <img src=@item.AnimePosterImage />
+                                    <div class="card-content">
+
+                                        <h5>@item.canonicalTitle</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="catalog alh-grid" id="catalog">
+                <div class="idiv-config">
+                    <h3 class=" section-title">Most Popular Manga</h3>
+                    <div class="va-div">
+                        <a class="custom-link va-config" asp-area="" asp-action="AllByUserCount" asp-controller="Manga">View All</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-wrapper">
+                    @{
+                        foreach (var item in Model.MangasByCount)
+                        {
+                            <div class="card-item">
+                                <a class="custom-link" href="/Manga/MangaOnPage/@item.Id">
+                                    <img src=@item.PosterImageLink />
+                                    <div class="card-content">
+
+                                        <h5>@item.CanonicalTitle</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="catalog alh-grid" id="catalog">
+                <div class="idiv-config">
+                <h3 class=" section-title">Most Popular Animes</h3>
+                <div class="va-div">
+                <a class="custom-link va-config" asp-area="" asp-action="AllByUserCount" asp-controller="Anime">View All</a>
+                    </div>
+                </div>
+                <hr />
+                <div class="card-wrapper">
+                    @{
+                        foreach (var item in Model.AnimesByCount)
+                        {
+                            <div class="card-item">
+                                <a class="custom-link" href="/Anime/AnimeOnPage/@item.Id">
+                                    <img src=@item.AnimePosterImage />
+                                    <div class="card-content">
+
+                                        <h5>@item.canonicalTitle</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

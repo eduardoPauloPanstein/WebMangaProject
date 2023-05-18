@@ -1,0 +1,73 @@
+﻿@model MvcPresentationLayer.Models.UserModel.UserUpdateViewModel
+@using System.Drawing
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h3 class="page-title pt-config">Settings</h3>
+
+<hr />
+<div class="edit-position">
+    @*<div class="col-md-2">
+        <input class="btn custom-link" value="Profile" />
+        <input class="btn custom-link" value="Account" />
+
+        </div>*@
+    <div class="col-md-10">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+                <div class="form-group e-padding">
+                    <label asp-for="Nickname" class="control-label e-title"></label>
+                    <input asp-for="Nickname" class="form-control etb-nick" />
+                    <span asp-validation-for="Nickname" class="text-danger"></span>
+                </div>
+            <div class="form-group py-3">
+                <label asp-for="About" class="control-label e-title"></label>
+                <textarea asp-for="About" class="form-control edit-textbox" rows="3"></textarea>
+                <span asp-validation-for="About" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="edit-img-title">
+                    <h5>Icon image</h5>
+                    <div class="form-group edit-images-input">
+                        <input asp-for="AvatarImageFileLocation" type="file" name="fileA" accept="image/png" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01"></label>
+                        <span asp-validation-for="AvatarImageFileLocation" class="text-danger"></span>
+
+                    </div>
+                    <div class="edit-images">
+                        <img src="~/avatars/@{
+                            @Model.AvatarImageFileLocation
+}" class="img-thumbnail" width="230" />
+                    </div>
+                </div>
+                <div class="edit-img-title">
+                    <div class="form-group edit-images-input">
+                        <h5>Cover Image</h5>
+                        <input asp-for="CoverImageFileLocation" type="file" name="fileC" accept="image/png" class="custom-file-input" id="inputGroupFile01">
+                        <label class="custom-file-label" for="inputGroupFile01"></label>
+                        <span asp-validation-for="CoverImageFileLocation" class="text-danger"></span>
+                    </div>
+                    <div class="edit-images">
+                        <img src="~/covers/@{
+                            @Model.CoverImageFileLocation
+}" class="img-thumbnail" width="230" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="custom-btn" />
+            </div>
+        </form>
+        <br />
+        <a asp-action="Index" class="custom-link ">Back to List</a>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
