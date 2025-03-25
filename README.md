@@ -1,6 +1,6 @@
 # O que é?
-Projeto de gerenciamento de mangás e animes desenvolvido em ASP.NET Core 6.0, utilizando Arquitetura em Camadas, separando-as por [bibliotecas de classe](https://learn.microsoft.com/en-us/dotnet/standard/class-libraries) , tais como DataAccessLayer, BusinessLogicalLayer, WebApi e padrões de design modernos.
-É um catalogo de obras de animação japonesas;
+Projeto de gerenciamento de mangás e animes desenvolvido em ASP.NET Core 6.0, utilizando Arquitetura em Camadas, separando-as por [bibliotecas de classe](https://learn.microsoft.com/en-us/dotnet/standard/class-libraries) , tais como DataAccessLayer, BusinessLogicalLayer, WebApi e padrões de design modernos.\
+É um catalogo de obras de animação japonesas;  
 Ver informações, salvar, classificar, comentar, montar sua lista de mangas e animes que já viu, está assistindo ou planeja ver. Se organize e explore novas obras, por categoria e recomendações.
 
 ## Arquitetura em Camadas
