@@ -1,8 +1,7 @@
 # WebMangaProject
 
 ## O que é?
-Projeto de gerenciamento de mangás e animes desenvolvido em **ASP.NET Core 6.0**, utilizando **Arquitetura em Camadas**, separando-as por [bibliotecas de classe](https://learn.microsoft.com/en-us/dotnet/standard/class-libraries), tais como **DataAccessLayer**, **BusinessLogicalLayer**, **WebApi** e padrões de design modernos.  
-
+Projeto de gerenciamento de mangás e animes desenvolvido em **ASP.NET Core 6.0**, utilizando **Arquitetura em Camadas**, separando-as por [bibliotecas de classe](https://learn.microsoft.com/en-us/dotnet/standard/class-libraries), tais como **DataAccessLayer**, **BusinessLogicalLayer**, **WebApi**, **WebMangaProject**, **Entities**, **Shared** e **Test**, com padrões de design modernos(talvez) e comuns de empresas locais estudadas.  
 É um catálogo de obras de animação japonesas, onde é possível:  
 - Ver informações, salvar, classificar, comentar, montar sua lista de mangás e animes que já viu, está assistindo ou planeja ver.  
 - Organizar-se e explorar novas obras por categorias e recomendações.
