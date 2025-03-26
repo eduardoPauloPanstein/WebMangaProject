@@ -155,7 +155,7 @@ Utilizar ferramentas como Coverlet para medir a cobertura de código e identific
 
 ---
 
-Motivação do Projeto
+## Motivação do Projeto
 🎯 Por que este projeto foi criado?
 
 O WebMangaProject foi desenvolvido com o objetivo de consolidar conhecimentos em ASP.NET Core, Entity Framework, e arquitetura em camadas, além de explorar boas práticas de desenvolvimento, como Dependency Injection, FluentValidation, e JWT. A escolha de criar um catálogo de animes e mangás surgiu da paixão por obras japonesas e da necessidade de um sistema organizado e funcional para gerenciar essas obras.
@@ -164,7 +164,7 @@ Além disso, o projeto foi uma oportunidade de aprender e aplicar conceitos avan
 
 ---
 
-Próximos Passos
+## Próximos Passos
 🔄 Evolução do Projeto, aprender +, aplicar +
 
 - Implementar uma rotina de atualização automática para sincronizar dados com a API externa.
@@ -175,7 +175,9 @@ Próximos Passos
 - Sistema de Recomendação Avançado: Melhorar o sistema de recomendações, utilizando algoritmos de aprendizado de máquina para sugerir animes e mangás com base no histórico e nas preferências dos usuários.
 - Detalhar certinho o tópico como executar. 
 
-Referências
+--
+
+## Referências
 📚 Links Úteis
 
 - [Migrations no Entity Framework Core](https://learn.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli)
